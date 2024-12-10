@@ -9,12 +9,11 @@ export class ApiMateriaService {
   private usuarioActual: any = null;
 
   private urlApi = 'http://localhost:8080/v2/materias';  // URL del backend
-  private username: string = '';  // Aquí puedes guardar las credenciales si es necesario
-  private password: string = '';
+  private username: string = 'root';  // Aquí puedes guardar las credenciales si es necesario
+  private password: string = 'root123';
 
   constructor(private http: HttpClient) {}
 
-  // Método para autenticar y obtener acceso usando Basic Authentication
   authenticate(username: string, password: string): Observable<any> {
     // Codifica las credenciales en base64
     const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
@@ -47,29 +46,34 @@ export class ApiMateriaService {
 
   // Verificar si el usuario está autenticado
   isAuthenticated(): boolean {
+
     return !!sessionStorage.getItem('usuario'); // Devuelve true si hay usuario
+  
   }
 
   // Método para guardar los datos del usuario en el servicio
   setUsuarioActual(usuario: any): void {
+
     this.usuarioActual = usuario;
+  
   }
 
   // Obtener los datos del usuario actual
   getUsuarioActual(): any {
+
+
     return this.usuarioActual;
+  
+
   }
 
   // Método para actualizar los datos del usuario
-  actualizarMateria(id: number, usuario: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Basic ${btoa(`${this.username}:${this.password}`)}`
-    });
-    
-
-    return this.http.put(`${this.urlApi}/${id}`, usuario, { headers });
+  actualizarMateria(id: number, materia: any): Observable<any> {
+    const url = `http://localhost:8080/v2/materias/${id}`;
+    const headers = { 'Content-Type': 'application/json' };
+    return this.http.put(url, materia, { headers });
   }
+
 
   registrarMateria(materias: any): Observable<any> {
     return this.http.post(this.urlApi, materias);

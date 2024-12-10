@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { ApiMateriaService } from '../service/api-materia.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mostrar-materias',
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './mostrar-materias.component.html',
   styleUrl: './mostrar-materias.component.css',
   standalone: true
@@ -13,6 +14,8 @@ import { CommonModule } from '@angular/common';
 export class MostrarMateriasComponent {
   materias: any[] = [];
   usuarioActual: any;
+  materiaActual: any = {}; // Grupo seleccionado para la edición
+  modoEdicion: boolean = false; // Modo de edición
 
   constructor(private apiService: ApiMateriaService,private router:Router) {}
 
@@ -62,6 +65,45 @@ export class MostrarMateriasComponent {
         this.router.navigate(['/login']); // Redirigir si hay un error al obtener los datos
       }
     );
+  }
+
+   // Este método se llama cuando el usuario selecciona un grupo para editar
+   seleccionarMateria(materia: any): void {
+    this.materiaActual = { ...materia }; // Clonamos los datos del grupo para no modificar el original
+    this.modoEdicion = true; // Activamos el modo edición
+    console.log('Grupo seleccionado para edición:', this.materiaActual);
+  }
+
+  // Este método guarda los cambios realizados en un grupo
+  guardarCambios(): void {
+    if (this.materiaActual && this.materiaActual.idMateria) {
+      const id = this.materiaActual.idMateria; // Obtenemos el ID del grupo
+      this.apiService.actualizarMateria(id, this.materiaActual).subscribe(
+        (response) => {
+          console.log('Grupo actualizado con éxito:', response);
+          // Actualizamos la lista local de grupos con el grupo modificado
+          const index = this.materias.findIndex((m) => m.idMateria === id);
+          if (index !== -1) {
+            this.materias[index] = { ...this.materiaActual };
+          }
+          alert('¡Cambios guardados con éxito!'); // Alerta al usuario
+          this.modoEdicion = false; // Salimos del modo edición
+        },
+        (error) => {
+          console.error('Error al actualizar el materia:', error);
+          alert('Error al guardar los cambios. Intente nuevamente.');
+        }
+      );
+    } else {
+      console.warn('No hay materia seleccionado o faltan datos');
+    }
+  }
+
+  // Este método cancela la edición y resetea el formulario
+  cancelarEdicion(): void {
+    this.materiaActual = {}; // Limpia el modelo del grupo seleccionado
+    this.modoEdicion = false; // Salimos del modo edición
+    console.log('Edición cancelada');
   }
   
   

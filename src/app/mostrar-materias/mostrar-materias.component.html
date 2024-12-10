@@ -13,6 +13,7 @@
 </head>
 
 <body>
+
   <!-- Barra de navegación con menú hamburguesa -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
@@ -37,31 +38,61 @@
     </div>
   </nav>
 
- <!-- CONTENIDO DE LA PAGINA -->
+<!-- Contenido principal -->
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Materias</h2>
 
+  <!-- Tabla de grupos -->
+  <div *ngIf="!modoEdicion" class="table-responsive">
+    <table class="table table-bordered table-hover table-striped">
+      <thead class="table-blue">
+        <tr>
+          <th>Materia</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let materia of materias">
+          <td>{{ materia.nombreMateria }}</td>
+          <td>{{ materia.estado }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm" (click)="seleccionarMateria(materia)">Editar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
- <div class="container mt-4">
-    <h2 class="text-center mb-4">Materias</h2>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover table-striped">
-            <thead class="table-blue">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let materia of materias">
-                <td>{{ materia.nombreMateria }}</td>
-                <td>{{ materia.estado }}</td>
-                <!-- Agrega más filas según sea necesario -->
-              </tr>
-            </tbody>
-        </table>
-    </div>
+ <!-- Formulario de edición -->
+ <div *ngIf="modoEdicion" class="card mt-4">
+  <div class="card-header bg-warning text-white">
+    <h5 class="mb-0">Editar Materia</h5>
+  </div>
+  <div class="card-body">
+    <form>
+      <div class="mb-3">
+        <label for="materia" class="form-label">Materia</label>
+        <input id="materia" class="form-control" [(ngModel)]="materiaActual.nombreMateria" name="materia" />
+      </div>
+      <div class="mb-3">
+        <label for="estado" class="form-label">Estado</label>
+        <select id="estado" class="form-control" [(ngModel)]="materiaActual.estado" name="estado">
+          <option value="true">Activo</option>
+          <option value="false">Inactivo</option>
+        </select>
+      </div>
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-primary" (click)="guardarCambios()">Guardar</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+  </div>
 </div>
 
   <!-- Enlace a los scripts de Bootstrap 5 -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

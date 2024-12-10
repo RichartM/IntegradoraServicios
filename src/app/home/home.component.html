@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,22 +6,18 @@
   <title>Página de Inicio - Bootstrap 5</title>
   <!-- Enlace al CSS de Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-<script>
-    
-</script>
+  <!-- Enlace a Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body>
-  <!-- Barra de navegación con menú hamburguesa -->
+  <!-- Barra de navegación -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-      <!-- Logo y nombre de la aplicación -->
       <a class="navbar-brand" href="home">SIPAL</a>
-      <!-- Botón de menú hamburguesa en pantallas pequeñas -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <!-- Menú de navegación -->
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
@@ -31,115 +26,109 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" (click)="cerrarSesion()">Salir</a>
           </li>
-          
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Contenido principal de la página -->
+  <!-- Contenido principal -->
   <div class="container mt-5">
     <div class="row">
       <div class="col text-center">
-        <h1>Bienvenido {{usuarioActual.primerNombre}}
-        </h1>
+        <h1>Bienvenido {{usuarioActual.primerNombre}}</h1>
       </div>
     </div>
     
-    <!-- Sección de tarjetas de ejemplo -->
+    <!-- Sección de tarjetas - Crear -->
     <div class="row mt-5">
+      <h2 class="text-center mb-4">Crear</h2>
+      <!-- Crear alumno -->
       <div class="col-md-4">
-        <div class="card">
-          <img src="https://cdn.pixabay.com/photo/2021/07/25/08/07/add-6491203_640.png" style="height: 300px; width: 400px;" class="card-img-top" alt="Imagen de ejemplo">
+        <div class="card text-center">
           <div class="card-body">
+            <i class="bi bi-person-plus display-1 text-primary"></i>
+            <h5 class="card-title mt-3">Alumno</h5>
             <a href="/crear" class="btn btn-primary">Crear alumno</a>
           </div>
         </div>
       </div>
+
+      <!-- Crear grupo -->
       <div class="col-md-4">
-        <div class="card">
-          <img src="https://cdn-icons-png.flaticon.com/128/12116/12116350.png" style="height: 300px; width: 400px; " class="card-img-top" alt="Imagen de ejemplo">
+        <div class="card text-center">
           <div class="card-body">
-            <a href="/editar" class="btn btn-primary">Editar alumno</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <img src="https://cdn-icons-png.flaticon.com/128/12655/12655820.png" style="height: 300px; width: 400px; "  class="card-img-top" alt="Imagen de ejemplo">
-          <div class="card-body">
-            <a href="/mostrar" class="btn btn-primary">Mostrar alumno</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <img src="https://cdn.pixabay.com/photo/2021/07/25/08/07/add-6491203_640.png" style="height: 300px; width: 400px;" class="card-img-top" alt="Imagen de ejemplo">
-          <div class="card-body">
+            <i class="bi bi-people-fill display-1 text-primary"></i>
+            <h5 class="card-title mt-3">Grupo</h5>
             <a href="/crear-grupo" class="btn btn-primary">Crear grupo</a>
           </div>
         </div>
       </div>
+
+      <!-- Crear profesor -->
       <div class="col-md-4">
-        <div class="card">
-          <img src="https://cdn-icons-png.flaticon.com/128/12116/12116350.png" style="height: 300px; width: 400px; " class="card-img-top" alt="Imagen de ejemplo">
+        <div class="card text-center">
           <div class="card-body">
-            <a href="/editar-grupo" class="btn btn-primary">Editar grupo</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <img src="https://cdn-icons-png.flaticon.com/128/12655/12655820.png" style="height: 300px; width: 400px; "  class="card-img-top" alt="Imagen de ejemplo">
-          <div class="card-body">
-            <a href="/mostrar-grupo" class="btn btn-primary">Mostrar grupo</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <img src="https://cdn.pixabay.com/photo/2021/07/25/08/07/add-6491203_640.png" style="height: 300px; width: 400px;" class="card-img-top" alt="Imagen de ejemplo">
-          <div class="card-body">
+            <i class="bi bi-person-badge-fill display-1 text-primary"></i>
+            <h5 class="card-title mt-3">Profesor</h5>
             <a href="/crear-profesor" class="btn btn-primary">Crear profesor</a>
           </div>
         </div>
       </div>
+
+      <!-- Crear materia -->
       <div class="col-md-4">
-        <div class="card">
-          <img src="https://cdn-icons-png.flaticon.com/128/12116/12116350.png" style="height: 300px; width: 400px; " class="card-img-top" alt="Imagen de ejemplo">
+        <div class="card text-center">
           <div class="card-body">
-            <a href="/editar-profesor" class="btn btn-primary">Editar profesor</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <img src="https://cdn-icons-png.flaticon.com/128/12655/12655820.png" style="height: 300px; width: 400px; "  class="card-img-top" alt="Imagen de ejemplo">
-          <div class="card-body">
-            <a href="/mostrar-profesor" class="btn btn-primary">Mostrar profesor</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <img src="https://cdn.pixabay.com/photo/2021/07/25/08/07/add-6491203_640.png" style="height: 300px; width: 400px;" class="card-img-top" alt="Imagen de ejemplo">
-          <div class="card-body">
+            <i class="bi bi-book display-1 text-primary"></i>
+            <h5 class="card-title mt-3">Materia</h5>
             <a href="/crear-materia" class="btn btn-primary">Crear materia</a>
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Sección de tarjetas - Mostrar -->
+    <div class="row mt-5">
+      <h2 class="text-center mb-4">Mostrar</h2>
+      <!-- Mostrar alumno -->
       <div class="col-md-4">
-        <div class="card">
-          <img src="https://cdn-icons-png.flaticon.com/128/12116/12116350.png" style="height: 300px; width: 400px; " class="card-img-top" alt="Imagen de ejemplo">
+        <div class="card text-center">
           <div class="card-body">
-            <a href="/editar-materia" class="btn btn-primary">Editar materia</a>
+            <i class="bi bi-person-lines-fill display-1 text-primary"></i>
+            <h5 class="card-title mt-3">Alumno</h5>
+            <a href="/mostrar" class="btn btn-primary">Mostrar alumno</a>
           </div>
         </div>
       </div>
+
+      <!-- Mostrar grupo -->
       <div class="col-md-4">
-        <div class="card">
-          <img src="https://cdn-icons-png.flaticon.com/128/12655/12655820.png" style="height: 300px; width: 400px; "  class="card-img-top" alt="Imagen de ejemplo">
+        <div class="card text-center">
           <div class="card-body">
+            <i class="bi bi-people display-1 text-primary"></i>
+            <h5 class="card-title mt-3">Grupo</h5>
+            <a href="/mostrar-grupo" class="btn btn-primary">Mostrar grupo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mostrar profesor -->
+      <div class="col-md-4">
+        <div class="card text-center">
+          <div class="card-body">
+            <i class="bi bi-person-video2 display-1 text-primary"></i>
+            <h5 class="card-title mt-3">Profesor</h5>
+            <a href="/mostrar-profesor" class="btn btn-primary">Mostrar profesor</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mostrar materia -->
+      <div class="col-md-4">
+        <div class="card text-center">
+          <div class="card-body">
+            <i class="bi bi-journal-text display-1 text-primary"></i>
+            <h5 class="card-title mt-3">Materia</h5>
             <a href="/mostrar-materia" class="btn btn-primary">Mostrar materia</a>
           </div>
         </div>
@@ -147,7 +136,7 @@
     </div>
   </div>
 
-  <!-- Enlace a los scripts de Bootstrap 5 -->
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

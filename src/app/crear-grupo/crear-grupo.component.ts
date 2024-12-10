@@ -41,7 +41,6 @@ export class CrearGrupoComponent {
       next: (response) => {
         console.log('Grupo registrado con éxito:', response);
         alert('Grupo registrado correctamente');
-        this.router.navigate(['/grupos']); // Redirigir a la lista de grupos o página deseada
       },
       error: (error) => {
         console.error('Error al registrar el grupo:', error);

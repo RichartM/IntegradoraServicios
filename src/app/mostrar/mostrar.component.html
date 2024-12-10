@@ -39,38 +39,96 @@
 
  <!-- CONTENIDO DE LA PAGINA -->
 
-
  <div class="container mt-4">
-    <h2 class="text-center mb-4">Alumno {{usuarioActual.primerNombre}}</h2>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover table-striped">
-            <thead class="table-blue">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo</th>
-                    <th>Sexo</th>
-                    <th>Grupo</th>
-                    <th>Estado</th>
-                    <th>Imagen</th>
-                </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let alumno of alumnos">
-                <td>{{ alumno.primerNombre }} {{ alumno.segundoNombre }}</td>
-                <td>{{ alumno.primerApellido }} {{ alumno.segundoApellido }}</td>
-                <td>{{ alumno.correo }}</td>
-                <td>{{ alumno.sexo }}</td>
-                <td>{{ alumno.grupos?.grupo }}</td>
-                <td>{{ alumno.estado }}</td>
-                <td>
-                  <img *ngIf="alumno.foto" src="data:image/png;base64,{{ alumno.foto }}" alt="Foto" style="width: 200px;">
-                </td>
-                <!-- Agrega más filas según sea necesario -->
-            </tbody>
-        </table>
+  <h2>Listado de Alumnos</h2>
+  
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Foto</th>
+        <th>Grupo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let alumno of alumnos">
+        <td>{{ alumno.id_alumno }}</td>
+        <td>{{ alumno.primerNombre }} {{ alumno.primerApellido }}</td>
+        <td>{{ alumno.correo }}</td>
+        <td>
+          <!-- Limitando el tamaño de la imagen -->
+          <img src="data:image/png;base64,{{ alumno.foto }}" class="img-fluid" style="max-width: 100px; max-height: 100px;" alt="Foto de Alumno">
+        </td>
+        <td>{{ alumno.grupos.grupo }}</td>
+        <td>
+          <!-- Botón para abrir el modal y editar el alumno -->
+          <button class="btn btn-warning" (click)="editarUsuario(alumno)">Editar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+
+  <!-- Modal para editar el alumno -->
+  <div class="modal fade" tabindex="-1" [class.show]="isModalOpen" style="display: block;" *ngIf="isModalOpen">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Alumno</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="cancelarEdicion()"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="guardarCambios()">
+            <div class="mb-3">
+              <label for="primerNombre" class="form-label">Primer Nombre:</label>
+              <input type="text" class="form-control" id="primerNombre" [(ngModel)]="usuarioEditando.primerNombre" name="primerNombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="segundoNombre" class="form-label">Segundo Nombre:</label>
+              <input type="text" class="form-control" id="segundoNombre" [(ngModel)]="usuarioEditando.segundoNombre" name="segundoNombre">
+            </div>
+            <div class="mb-3">
+              <label for="primerApellido" class="form-label">Primer Apellido:</label>
+              <input type="text" class="form-control" id="primerApellido" [(ngModel)]="usuarioEditando.primerApellido" name="primerApellido" required>
+            </div>
+            <div class="mb-3">
+              <label for="segundoApellido" class="form-label">Segundo Apellido:</label>
+              <input type="text" class="form-control" id="segundoApellido" [(ngModel)]="usuarioEditando.segundoApellido" name="segundoApellido">
+            </div>
+            <div class="mb-3">
+              <label for="correo" class="form-label">Correo:</label>
+              <input type="email" class="form-control" id="correo" [(ngModel)]="usuarioEditando.correo" name="correo" required>
+            </div>
+            <div class="mb-3">
+              <label for="sexo" class="form-label">Sexo:</label>
+              <select class="form-select" id="sexo" [(ngModel)]="usuarioEditando.sexo" name="sexo">
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="foto" class="form-label">Foto:</label>
+              <input type="file" class="form-control" (change)="onFileChange($event)">
+            </div>
+            <div class="mb-3">
+              <label for="estado" class="form-label">Estado:</label>
+              <select class="form-select" id="estado" [(ngModel)]="usuarioEditando.estado" name="estado">
+                <option [value]="true">Activo</option>
+                <option [value]="false">Inactivo</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
+
 
   <!-- Enlace a los scripts de Bootstrap 5 -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

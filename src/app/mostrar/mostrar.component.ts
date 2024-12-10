@@ -1,78 +1,94 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../service/api.service';
 import { Router } from '@angular/router';
-
-import { CommonModule } from '@angular/common'; // Importa CommonModule
-
-
-
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mostrar',
+  imports: [CommonModule, FormsModule],
   templateUrl: './mostrar.component.html',
-  styleUrl: './mostrar.component.css',
-  imports:[CommonModule],
-  standalone:true
+  styleUrls: ['./mostrar.component.css'],
+  standalone: true
 })
-
-export class MostrarComponent {
+export class MostrarComponent implements OnInit {
   alumnos: any[] = [];
-  usuarioActual: any;
+  usuarioEditando: any = {}; // Inicializa con un objeto vacío para evitar el error de enlace bidireccional
+  isModalOpen: boolean = false; // Propiedad para controlar la visibilidad del modal
 
-  constructor(private apiService: ApiService,private router:Router) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
+    if (!this.apiService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.apiService.authenticate('root', 'root123').subscribe(
       response => {
-        console.log("Respuesta del servidor de autenticación:", response);
         this.apiService.setCredentials('root', 'root123');
-      
-        console.log("datos cargados :D");
-        this.llenarData();  
+        this.llenarData();
       },
       error => {
         console.error('Error de autenticación:', error);
+        this.router.navigate(['/login']);
       }
     );
-
-    if (!this.apiService.isAuthenticated()) {
-      console.log('Sesión no iniciada. Redirigiendo al login...');
-      this.router.navigate(['/login']); // Redirigir al login si no está autenticado
-      return;
-    }else{
-        console.log("Sesion inciada");
-        this.usuarioActual = this.apiService.getUsuarioActual();
-        console.log('Datos del usuario actual:', this.usuarioActual);
-    }
-
-   console.log("datos cargados");
-   console.log('Estructura de alumnos:', this.alumnos);
   }
-  
+
   llenarData(): void {
     this.apiService.getData().subscribe(
       response => {
-        console.log('Respuesta del servidor:', response);
         if (response && response.alumnosResponse && response.alumnosResponse.alumnos) {
           this.alumnos = response.alumnosResponse.alumnos;
-          console.log('Alumnos cargados:', this.alumnos);
-          
-        } else {
-          console.warn('Estructura de respuesta inesperada:', response);
         }
       },
       error => {
         console.error('Error al obtener los datos:', error);
-        this.router.navigate(['/login']); // Redirigir si hay un error al obtener los datos
+        this.router.navigate(['/login']);
       }
     );
   }
-  
-  
+
+  editarUsuario(alumno: any): void {
+    this.usuarioEditando = { ...alumno }; // Crear una copia del alumno para evitar cambios directos en los datos originales
+    this.isModalOpen = true; // Abrir el modal
+  }
+
+  guardarCambios(): void {
+    if (this.usuarioEditando) {
+      this.apiService.actualizarUsuario(this.usuarioEditando.id_alumno, this.usuarioEditando).subscribe(
+        response => {
+          this.llenarData();
+          this.isModalOpen = false; // Cerrar el modal
+          this.usuarioEditando = {}; // Limpiar el objeto después de la edición
+        },
+        error => {
+          console.error('Error al guardar los cambios:', error);
+        }
+      );
+    }
+  }
+
+  cancelarEdicion(): void {
+    this.usuarioEditando = {}; // Limpiar el objeto de edición
+    this.isModalOpen = false; // Cerrar el modal
+  }
+
   cerrarSesion(): void {
-    sessionStorage.removeItem('usuario'); // Elimina los datos del usuario
-    this.apiService.setUsuarioActual(null); // Limpia la sesión en el servicio
-    console.log('Sesión cerrada');
-    this.router.navigate(['/login']); // Redirige al login
+    sessionStorage.removeItem('usuario');
+    this.apiService.setUsuarioActual(null);
+    this.router.navigate(['/login']);
+  }
+
+  onFileChange(event: any): void {
+    const file = event.target.files[0]; // Obtener el archivo seleccionado
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.usuarioEditando.foto = e.target.result.split(',')[1]; // Extrae la imagen en base64
+      };
+      reader.readAsDataURL(file); // Leer el archivo como una URL de datos
+    }
   }
 }

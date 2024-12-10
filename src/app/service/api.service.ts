@@ -8,9 +8,10 @@ import { Observable } from 'rxjs';
 export class ApiService {
   private usuarioActual: any = null;
 
-  private urlApi = 'http://localhost:8080/v3/alumnos';  // URL del backend
-  private username: string = '';  // Aquí puedes guardar las credenciales si es necesario
-  private password: string = '';
+  // URL del backend
+  private urlApi = 'http://localhost:8080/v3/alumnos';  
+  private username: string = 'root';  // Almacena el nombre de usuario para Basic Auth
+  private password: string = 'root123';  // Almacena la contraseña para Basic Auth
 
   constructor(private http: HttpClient) {}
 
@@ -39,9 +40,7 @@ export class ApiService {
     return this.http.get(`${this.urlApi}`, { headers });
   }
 
-  
-
-  // Método para guardar las credenciales de autenticación si es necesario
+  // Método para guardar las credenciales de autenticación
   setCredentials(username: string, password: string): void {
     this.username = username;
     this.password = password;
@@ -49,32 +48,40 @@ export class ApiService {
 
   // Verificar si el usuario está autenticado
   isAuthenticated(): boolean {
-    return !!sessionStorage.getItem('usuario'); // Devuelve true si hay usuario
+    return !!sessionStorage.getItem('usuario');  // Devuelve true si hay usuario
   }
 
   // Método para guardar los datos del usuario en el servicio
   setUsuarioActual(usuario: any): void {
     this.usuarioActual = usuario;
+    sessionStorage.setItem('usuario', JSON.stringify(usuario));  // Guarda en sessionStorage
   }
 
   // Obtener los datos del usuario actual
   getUsuarioActual(): any {
-    return this.usuarioActual;
+    return this.usuarioActual || JSON.parse(sessionStorage.getItem('usuario') || '{}');
   }
 
   // Método para actualizar los datos del usuario
   actualizarUsuario(id: number, usuario: any): Observable<any> {
+    // Establecer los encabezados de autenticación
+    const authHeader = `Basic ${btoa(`${this.username}:${this.password}`)}`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Basic ${btoa(`${this.username}:${this.password}`)}`
+      'Authorization': authHeader
     });
-    
 
     return this.http.put(`${this.urlApi}/${id}`, usuario, { headers });
   }
 
+  // Método para registrar un nuevo alumno
   registrarAlumno(alumno: any): Observable<any> {
-    return this.http.post(this.urlApi, alumno);
+    const authHeader = `Basic ${btoa(`${this.username}:${this.password}`)}`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': authHeader
+    });
+
+    return this.http.post(this.urlApi, alumno, { headers });
   }
-  
 }

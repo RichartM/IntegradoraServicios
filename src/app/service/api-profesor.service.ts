@@ -9,8 +9,8 @@ export class ApiProfesorService {
   private usuarioActual: any = null;
 
   private urlApi = 'http://localhost:8080/v4/docente';  // URL del backend
-  private username: string = '';  // Aquí puedes guardar las credenciales si es necesario
-  private password: string = '';
+  private username: string = 'root';  // Aquí puedes guardar las credenciales si es necesario
+  private password: string = 'root123';
 
   constructor(private http: HttpClient) {}
 

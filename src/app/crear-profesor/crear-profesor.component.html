@@ -30,62 +30,66 @@
   </nav>
 
   <!-- Contenido principal -->
-  <div class="container mt-4">
-    <h2>Registrar Profesor</h2>
-    <form (ngSubmit)="registrarProfesor()">
-    
-      <div class="mb-3">
-        <label for="primerNombre" class="form-label">Primer nombre</label>
-        <input id="primerNombre" type="text" class="form-control" [(ngModel)]="nuevoDocente.primerNombre" name="primerNombre" required />
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card border-primary">
+          <div class="card-header bg-primary text-white text-center">
+            <h4>Registrar Profesor</h4>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="registrarProfesor()">
+              <div class="mb-3">
+                <label for="primerNombre" class="form-label">Primer Nombre</label>
+                <input id="primerNombre" type="text" class="form-control" [(ngModel)]="nuevoDocente.primerNombre" name="primerNombre" required />
+              </div>
+              <div class="mb-3">
+                <label for="segundoNombre" class="form-label">Segundo Nombre</label>
+                <input id="segundoNombre" type="text" class="form-control" [(ngModel)]="nuevoDocente.segundoNombre" name="segundoNombre" required />
+              </div>
+              <div class="mb-3">
+                <label for="primerApellido" class="form-label">Primer Apellido</label>
+                <input id="primerApellido" type="text" class="form-control" [(ngModel)]="nuevoDocente.primerApellido" name="primerApellido" required />
+              </div>
+              <div class="mb-3">
+                <label for="segundoApellido" class="form-label">Segundo Apellido</label>
+                <input id="segundoApellido" type="text" class="form-control" [(ngModel)]="nuevoDocente.segundoApellido" name="segundoApellido" required />
+              </div>
+              <div class="mb-3">
+                <label for="correo" class="form-label">Correo Electrónico</label>
+                <input id="correo" type="email" class="form-control" [(ngModel)]="nuevoDocente.correo" name="correo" required />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input id="password" type="password" class="form-control" [(ngModel)]="nuevoDocente.password" name="password" required />
+              </div>
+              <div class="mb-3">
+                <label for="sexo" class="form-label">Sexo</label>
+                <select id="sexo" class="form-select" [(ngModel)]="nuevoDocente.sexo" name="sexo" required>
+                  <option value="" disabled selected>Seleccione una opción</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Otro">Otro</option>
+                </select>
+              </div>
+              <div class="form-check mb-3">
+                <input id="estado" type="checkbox" class="form-check-input" [(ngModel)]="nuevoDocente.estado" name="estado" />
+                <label class="form-check-label" for="estado">Activo</label>
+              </div>
+              <div class="mb-3">
+                <label for="id_grupo" class="form-label">Grupo</label>
+                <input id="id_grupo" type="text" class="form-control" [(ngModel)]="nuevoDocente.grupos.id_grupo" name="id_grupo" required />
+              </div>
+              <div class="mb-3">
+                <label for="materias" class="form-label">Materia</label>
+                <input id="materias" type="number" class="form-control" [(ngModel)]="nuevoDocente.materias.idMateria" name="materias" required />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Registrar Profesor</button>
+            </form>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="segundoNombre" class="form-label">Segundo nombre</label>
-        <input id="segundoNombre" type="text" class="form-control" [(ngModel)]="nuevoDocente.segundoNombre" name="segundoNombre" required />
-      </div>
-    
-      <div class="mb-3">
-        <label for="primerApellido" class="form-label">Primer apellido</label>
-        <input id="primerApellido" type="text" class="form-control" [(ngModel)]="nuevoDocente.primerApellido" name="primerApellido" required />
-      </div>
-    
-      <div class="mb-3">
-        <label for="segundoApellido" class="form-label">Segundo apellido</label>
-        <input id="segundoApellido" type="text" class="form-control" [(ngModel)]="nuevoDocente.segundoApellido" name="segundoApellido" required />
-      </div>
-    
-      <div class="mb-3">
-        <label for="correo" class="form-label">Correo</label>
-        <input id="correo" type="text" class="form-control" [(ngModel)]="nuevoDocente.correo" name="correo" required />
-      </div>
-    
-      <div class="mb-3">
-        <label for="password" class="form-label">Contraseña</label>
-        <input id="password" type="text" class="form-control" [(ngModel)]="nuevoDocente.password" name="password" required />
-      </div>
-    
-      <div class="mb-3">
-        <label for="sexo" class="form-label">Sexo</label>
-        <input id="sexo" type="text" class="form-control" [(ngModel)]="nuevoDocente.sexo" name="sexo" required />
-      </div>
-    
-    
-      <div class="form-check mb-3">
-        <input id="estado" type="checkbox" class="form-check-input" [(ngModel)]="nuevoDocente.estado" name="estado" />
-        <label class="form-check-label" for="estado">Activo</label>
-      </div>
-      <div class="mb-3">
-        <label for="id_grupo" class="form-label">Grupo</label>
-        <input id="id_grupo" type="id_grupo" class="form-control" [(ngModel)]="nuevoDocente.grupos.id_grupo" name="id_grupo" required />
-      </div>
-      <div class="mb-3">
-        <label for="materias" class="form-label">Materia</label>
-        <input id="materias" type="number" class="form-control" [(ngModel)]="nuevoDocente.materias.idMateria" name="materias" required />
-      </div>
-    
-      <button type="submit" class="btn btn-primary">Registrar profesor</button>
-    </form>
-      
-      
+    </div>
   </div>
 
   <!-- Scripts de Bootstrap 5 -->

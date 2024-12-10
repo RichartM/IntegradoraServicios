@@ -51,7 +51,6 @@ export class CrearProfesorComponent {
       next: (response) => {
         console.log('Grupo registrado con éxito:', response);
         alert('Grupo registrado correctamente');
-       
       },
       error: (error) => {
         console.error('Error al registrar el grupo:', error);

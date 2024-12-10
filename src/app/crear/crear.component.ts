@@ -47,7 +47,7 @@ export class CrearComponent {
       next: (response) => {
         console.log('Alumno registrado con éxito:', response);
         alert('Alumno registrado correctamente');
-        this.router.navigate(['/alumnos']); // Redirigir a la lista de alumnos o página deseada
+     
       },
       error: (error) => {
         console.error('Error al registrar el alumno:', error);

@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { ApiService } from '../service/api.service';
 import { Route, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ApiProfesorService } from '../service/api-profesor.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class LoginComponent {
   correo: string = '';  // Variable para el nombre de usuario
   password: string = '';  // Variable para la contraseña
 
-  constructor(private apiService: ApiService, private router:Router) {}
+  constructor(private apiService:ApiProfesorService, private apiService2:ApiService, private router:Router) {}
 
   ngOnInit(): void {
     this.apiService.authenticate('root', 'root123').subscribe(
@@ -43,7 +44,7 @@ export class LoginComponent {
         console.log('Respuesta del servidor:', response);
   
         // Validamos las credenciales comparando con los datos obtenidos
-        const usuario = response.alumnosResponse.alumnos.find(
+        const usuario = response.docenteResponse.docentes.find(
           (user: any) => user.correo === this.correo && user.password === this.password
         );
        
